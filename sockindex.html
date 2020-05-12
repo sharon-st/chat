@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <style type="text/css">
+    #messages { padding: 0px; list-style-type: none;}
+    #messages li {border-bottom: 1px solid #ccc; }
+  </style>
+<script src= "/msdn.microsoft.com/en-au/library/ie/ms535874%28v=vs.85%29.aspx"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+
+</head>
+<body>
+ <ul id="messages"></ul>
+ <hr>
+<input id="myInput" type = "text" ></br>
+<script>
+var socket = io('http://localhost:3000');
+			socket.on('connect', function () {
+			});	
+
+</script>
+
+<script>
+const input = document.querySelector('#myInput');
+input.addEventListener('keyup',function(e){
+	if (e.keyCode === 13) {
+	window.x = document.getElementById("myInput").value;
+	document.getElementById("myInput").value ="";
+	socket.emit('clientMessage', window.x);
+}
+	
+});
+socket.on('pmessage',function(message){
+	
+$('#messages').append($('<li></li>').text(message).css({
+            'color':'red'
+
+          }));
+
+
+
+				});
+socket.on('message',function(message){
+				
+
+ $('#messages').append($('<li></li>').text(message).css({
+            'color':'blue'
+
+          })
+		  );
+				
+				
+				});
+</script> 
+
+</body>
+</html>
